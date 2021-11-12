@@ -1,0 +1,82 @@
+import numpy as np
+import re
+def get_key(d:dict, value:int):
+    for k, v in d.items():
+        if v == value:
+            return k
+    return False
+def get_list_cycles(list_operators):
+    cycles = {}
+    for i in range(len(list_operators)-1):
+        if list_operators[i] =="moo":
+            n = 1
+            while(True):
+                if  list_operators[i-n] == "MOO" and (get_key(cycles,i-n)) == False:
+                    cycles.update({str(i): i-n})
+                    break
+                else:
+                    n += 1
+    return cycles
+
+
+file = open('D:\my_program\Theory and practice of programming languages\cow\Fibonacci.cow', 'r')
+res = file.read()
+list_operators = re.sub(r'\n', r' ', res)
+list_operators = list_operators.split(' ')
+list_operators=[x for x in list_operators if x !='']
+ind = 0
+result = np.zeros(3000)
+cycles = get_list_cycles(list_operators)
+
+comms_list = ["moo", "mOo", "moO", "mOO", "Moo", "MOo", "MoO", "MOO", "OOO", "MMM", "OOM", "oom"]
+
+register = 0
+index = 0
+i = 0
+
+while( i < len(list_operators)):
+    if i ==' ':
+        continue
+    operant = list_operators[i]
+    if operant == "moo":
+        i = cycles[str(i)]
+        continue
+    elif operant == "mOo":
+        index += 1
+    elif operant == "moO":
+        index -= 1
+    elif operant == "mOO":
+        #print(result[index])
+        if result[index] == 3 or result[index] > 11:
+            exit()
+        else:
+            list_operators[i] = comms_list[result[index]]
+    elif operant == "Moo":
+        print(chr(int(result[index])))
+        if result[index] == 0:
+            print(chr(result[index]))
+
+    elif operant == "MOo":
+        result[index] -= 1
+    elif operant == "MoO":
+        result[index] += 1
+    elif operant == "MOO":
+        #print(result[index])
+        if result[index] == 0:
+            #print(result[index])
+            i = int(get_key(cycles, i))+1
+            #print(i)
+            continue
+    elif operant == "OOO":
+        result[index] = 0
+    elif operant == "MMM":
+        if register == 0:
+            register = result[index]
+        else:
+            result[index] = register
+    elif operant == "OOM":
+        print(result[index])
+    i+=1
+
+
+

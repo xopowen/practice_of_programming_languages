@@ -19,11 +19,13 @@ def get_list_cycles(list_operators):
     return cycles
 
 
-file = open('D:\my_program\Theory and practice of programming languages\cow\Fibonacci.cow', 'r')
+file = open('D:\my_program\Theory and practice of programming languages\cow\hello.cow', 'r')
 res = file.read()
 list_operators = re.sub(r'\n', r' ', res)
 list_operators = list_operators.split(' ')
 list_operators=[x for x in list_operators if x !='']
+
+
 ind = 0
 result = np.zeros(3000)
 cycles = get_list_cycles(list_operators)
@@ -52,6 +54,7 @@ while( i < len(list_operators)):
         else:
             list_operators[i] = comms_list[result[index]]
     elif operant == "Moo":
+        print(result[index])
         print(chr(int(result[index])))
         if result[index] == 0:
             print(chr(result[index]))
@@ -65,7 +68,6 @@ while( i < len(list_operators)):
         if result[index] == 0:
             #print(result[index])
             i = int(get_key(cycles, i))+1
-            #print(i)
             continue
     elif operant == "OOO":
         result[index] = 0

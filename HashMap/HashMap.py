@@ -93,7 +93,7 @@ class SpecialHashMap(dict):
             else:
                 operator, nemper = list_make[i][0:2], int(list_make[i][-1])
 
-                kit_sets.append(self.predSobajie(operator, nemper,i, sort_tuple))
+                kit_sets.append(self.predSobajie(operator, nemper,-1, sort_tuple))
         kit_sets = list(kit_sets[0].intersection(*kit_sets))
         result = {}
 
@@ -110,7 +110,6 @@ class SpecialHashMap(dict):
         if operator == ">=":
             return set(filter(lambda x:int(x[position]) >= nemper, sort_len_list))
         elif operator == ">":
-           
             return set(filter(lambda x: int(x[position]) > nemper , sort_len_list))
 
         elif operator == "<":
@@ -168,6 +167,4 @@ ftf["1, 5, 3"] = 400
 ftf["5, 5, 4"] = 500
 ftf["10, 5, 5"] = 600
 
-
-print(ftf.ploc(">0"))
-
+print(ftf.ploc(">=1,>1"))

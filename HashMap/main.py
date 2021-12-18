@@ -2,8 +2,6 @@ import re
 
 class SpecialHashMap(dict):
 
-
-
     def __setitem__(self, key, item):
         self.__dict__[key] = item
 
@@ -64,9 +62,10 @@ class SpecialHashMap(dict):
                 else:
                     sort_len_list[i] = tuple(map(int, sort_len_list[i].split(',')))
             else:
-                if sort_len_list[i][0].isdigit():
-                    sort_len_list[i] = tuple(map(int, sort_len_list[i]))
 
+                if sort_len_list[i][0].isdigit():
+
+                    sort_len_list[i] = tuple(map(int, sort_len_list[i]))
 
         return sort_len_list
 
@@ -80,16 +79,20 @@ class SpecialHashMap(dict):
         return self.__dict__
 
     def __ploc_dop(self,list_make):
+
         sort_len_list_str = list(filter(lambda x: len( x.split(",") ) == len(list_make), self.__dict__.keys()))
         sort_tuple = self.__clearingItems( sort_len_list_str.copy() )
         kit_sets =[]
+
         operator, nemper ='',''
         for i in range(len(list_make)):
             if len(list_make[i]) == 2:
-                operator,nemper = list_make[i][0], int(list_make[i][1])
-                kit_sets.append( self.predSobajie(operator,nemper,i,sort_tuple))
+                operator,nemper = list_make[i][0][-1], int(list_make[i][1])
+
+                kit_sets.append( self.predSobajie(operator, nemper, -1, sort_tuple))
             else:
                 operator, nemper = list_make[i][0:2], int(list_make[i][-1])
+
                 kit_sets.append(self.predSobajie(operator, nemper,i, sort_tuple))
         kit_sets = list(kit_sets[0].intersection(*kit_sets))
         result = {}
@@ -105,25 +108,24 @@ class SpecialHashMap(dict):
     def predSobajie(self,operator,nemper,position,sort_len_list):
 
         if operator == ">=":
-            return set(filter(lambda x: x[position] >= nemper, sort_len_list))
+            return set(filter(lambda x:int(x[position]) >= nemper, sort_len_list))
         elif operator == ">":
-            return set(filter(lambda x: x[position] > nemper, sort_len_list))
+           
+            return set(filter(lambda x: int(x[position]) > nemper , sort_len_list))
 
         elif operator == "<":
-            return set(filter(lambda x: x[position] < nemper, sort_len_list))
+            return set(filter(lambda x: int(x[position]) < nemper, sort_len_list))
 
         elif operator == "<=":
-            return set(filter(lambda x: x[position] <= nemper, sort_len_list))
+            return set(filter(lambda x: int(x[position]) <= nemper, sort_len_list))
 
         elif operator == "==":
-            return set(filter(lambda x: x[position] == nemper, sort_len_list))
+            return set(filter(lambda x: int(x[position]) == nemper, sort_len_list))
 
         elif operator == "<>":
-            return set(filter(lambda x: x[position] != nemper, sort_len_list))
+            return set(filter(lambda x: int(x[position]) != nemper, sort_len_list))
         else:
             raise ValueError('условие неверное')
-
-
 
     def ploc(self,*args):
         sting = str(*args)
@@ -151,4 +153,21 @@ class SpecialHashMap(dict):
                 item_condition = ''
 
         return self.__ploc_dop(list_conditions)
+
+ftf = SpecialHashMap()
+ftf["value1"] = 1
+ftf["value2"] = 2
+ftf["value3"] = 3
+ftf["1"] = 10
+ftf["2"] = 20
+ftf["3"] = 30
+ftf["1, 5"] = 100
+ftf["5, 5"] = 200
+ftf["10, 5"] = 300
+ftf["1, 5, 3"] = 400
+ftf["5, 5, 4"] = 500
+ftf["10, 5, 5"] = 600
+
+
+print(ftf.ploc(">0"))
 

@@ -19,7 +19,7 @@ def get_list_cycles(list_operators):
     return cycles
 
 
-file = open('D:\my_program\Theory and practice of programming languages\cow\hello.cow', 'r')
+file = open('hello.cow', 'r')
 res = file.read()
 list_operators = re.sub(r'\n', r' ', res)
 list_operators = list_operators.split(' ')

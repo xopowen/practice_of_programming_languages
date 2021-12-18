@@ -54,7 +54,7 @@ while( i < len(list_operators)):
         else:
             list_operators[i] = comms_list[result[index]]
     elif operant == "Moo":
-        print(result[index])
+
         print(chr(int(result[index])))
         if result[index] == 0:
             print(chr(result[index]))
